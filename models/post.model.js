@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { Comment } from "./comment.model.js"
 
 const PostSchema = new Schema({
      title: {
@@ -14,7 +15,15 @@ const PostSchema = new Schema({
      image: {
         type: String,
         required: [true, "please provide an image"]
+     },
+     likes: { type: Number, default: 0 },
+     unlikes: { type: Number, default: 0 },
+     comments: {
+        type: [Comment], 
+        ref: Comment
      }
+}, {
+   timestamps: true
 })
 
 

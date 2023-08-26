@@ -7,26 +7,29 @@ export const typeDefs = gql`
         email: String!
         password: String!
         image: String!
+        bannerImage: String!
+        followers: Int!
         resetPasswordToken: String
     }
 
     type Post {
         id: ID!
+        author: String!
         title: String!
         description: String!
         image: String!
-        postedBy: User!
-        postedAt: String!
+        likes: Int!
+        unlikes: Int!
+        comments: [Comment]!
     }
 
-    type Query {
-        user(id: ID!): User!
-        allUsers: [User]
-        post(id: ID!): Post!
-        allPosts: [Post]
+    type Comment {
+        id: ID!
+        description: String!
+        commentedBy: String!
     }
 
-    type LoginReturnType {
+      type LoginReturnType {
         user: User
         token: String!
     }
@@ -34,7 +37,7 @@ export const typeDefs = gql`
     input RegisterUserInput {
          name: String!
          email: String!
-        password: String!
+         password: String!
     }
 
     input LoginUserInput {
@@ -42,8 +45,32 @@ export const typeDefs = gql`
         password: String!
     }
 
+    input UpdateUserInput {
+        name: String
+        email: String
+        password: String
+    }
+
+    input CreatePostInput {
+        author: String!
+        title: String!
+        description: String!
+        image: String!
+    }
+
+    type Query {
+        user(id: ID!): User!
+        allUsers: [User]!
+
+        allPosts: [Post]!
+        post(postId: ID!): Post!
+    }
+
     type Mutation {
         register(user: RegisterUserInput!): User
         login(user: LoginUserInput!): LoginReturnType
+        updateUser(id: ID!, newData: UpdateUserInput!): User
+
+        createPost(post: CreatePostInput!): Post
     }
 `

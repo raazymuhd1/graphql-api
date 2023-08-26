@@ -4,7 +4,9 @@ import cors from "cors"
 import dotenv from "dotenv"
 import { expressMiddleware } from "@apollo/server/express4"
 import { ApolloServer } from "apollo-server-express"
-
+// routes
+import userRoutes from "./routes/user.route.js"
+import { notFound } from "./middlewares/not-found.middleware.js"
 import { connectDb } from "./utils/connectDB.js"
 import { typeDefs } from "./schema/type-defs.js"
 import { resolvers } from "./schema/resolvers.js" 
@@ -15,15 +17,17 @@ const app = express()
 
 // db connection
 connectDb()
-
 const server = new ApolloServer({ typeDefs, resolvers });
 await server.start()
 server.applyMiddleware({ app })
 
+app.use("/api/user", userRoutes)
 app.use("/graphql", 
     cors(), 
     express.json(), 
     expressMiddleware(server), () => console.log("server is running")
 )
+// 404 PAGE HANDLING
+app.use(notFound)
 
 app.listen(PORT, () => console.log(`server running on port ${PORT}`))

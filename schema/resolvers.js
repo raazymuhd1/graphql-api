@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken"
 
 export const resolvers = {
     Query: {
+        // USER QUERIES
         user: async(_, args) => {
             const { id } = args;
             const user = await User.findOne({ _id: id })
@@ -24,6 +25,8 @@ export const resolvers = {
 
            return "no users yet"
         },
+
+        // POST QUERIES
         post: (_, args) => {
 
         },
@@ -33,19 +36,29 @@ export const resolvers = {
     },
 
     Mutation: {
+        // USER MUTATIONS
+        // REGISTER USER
         register: async(_, args) => {
             const { user: { name, email, password }} = args;
             const salt = bcrypt.genSaltSync(10);
-            const hashedPassword = bcrypt.hashSync(password, salt)
+            let hashedPassword;
+            // check if theres a password, if so encrypted
+            if(password) hashedPassword = bcrypt.hashSync(password, salt)
 
             if(!name && !email && !hashedPassword) {
                 console.log(args)
-                throw new Error("Please fill in the required fields");
+                return new Error("Please fill in the required fields");
             }
 
-            const newUser = new User({ name, email, password: hashedPassword })
+            const newUser = new User({ 
+                name, 
+                email, 
+                password: hashedPassword, 
+                image: "", 
+                bannerImage: "", 
+                resetPasswordToken: "" 
+            })
             await newUser.save()
-
             return args.user;
         },
         // LOGIN USER
@@ -73,6 +86,35 @@ export const resolvers = {
 
             throw new Error("please enter the correct credentials")
 
+        }, 
+        // UPDATE USER
+        updateUser: async(_, args) => {
+            const { id, userData: { name, email, password }} = args;
+            const salt = bcrypt.genSaltSync(10);
+            const filteredUser = await User.findOne({ _id: id }) 
+            let hashedPassword;
+
+            if(password) hashedPassword = bcrypt.hashSync(password, salt)
+
+            if(!name || !email || !hashedPassword) {
+                console.log(args)
+                return new Error("Please fill in the required fields");
+            }
+
+            if(filteredUser) {
+                await User.findOneAndUpdate({ _id: id }, { 
+                    name,
+                    email,
+                    password: hashedPassword,
+                    image: filteredUser.image,
+                    bannerImage: filteredUser.bannerImage,
+                    resetPasswordToken: ""
+                 })
+
+                 return args.userData;
+            }
+
+            return "no user with that ID"
         }
     }
 }
