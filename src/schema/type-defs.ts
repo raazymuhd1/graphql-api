@@ -18,9 +18,9 @@ export const typeDefs = gql`
         title: String!
         description: String!
         image: String!
-        likes: Int!
-        unlikes: Int!
-        comments: [Comment]!
+        likes: [String]
+        dislikes: [String]
+        comments: [Comment]
     }
 
     type Comment {
@@ -58,6 +58,13 @@ export const typeDefs = gql`
         image: String!
     }
 
+    input UpdatePostInput {
+        author: String!
+        title: String!
+        description: String!
+        image: String!
+    }
+
     type Query {
         user(id: ID!): User!
         allUsers: [User]!
@@ -70,7 +77,10 @@ export const typeDefs = gql`
         register(user: RegisterUserInput!): User
         login(user: LoginUserInput!): LoginReturnType
         updateUser(id: ID!, newData: UpdateUserInput!): User
+        deleteUser(id: ID!): User 
 
         createPost(post: CreatePostInput!): Post
+        updatePost(id: ID!, postData: UpdatePostInput): Post
+        deletePost(id: ID!): Post
     }
 `

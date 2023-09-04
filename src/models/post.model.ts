@@ -1,7 +1,8 @@
 import { Schema, model } from "mongoose";
 import { Comment } from "./comment.model.js"
+import { IPostSchema } from "../types/post.types"
 
-const PostSchema = new Schema({
+const PostSchema = new Schema<IPostSchema>({
      title: {
         type: String,
         required: [true, "please provide a title"],
@@ -17,7 +18,7 @@ const PostSchema = new Schema({
         required: [true, "please provide an image"]
      },
      likes: { type: Number, default: 0 },
-     unlikes: { type: Number, default: 0 },
+     dislikes: { type: Number, default: 0 },
      comments: {
         type: [Comment], 
         ref: Comment
@@ -27,4 +28,4 @@ const PostSchema = new Schema({
 })
 
 
-export const Post = model("Post", PostSchema)
+export const Post = model<IPostSchema>("Post", PostSchema)

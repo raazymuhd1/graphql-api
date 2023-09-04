@@ -1,4 +1,4 @@
-## DOCUMENTING LEARNING JOURNEY OF GRAPHQL API
+#### *DOCUMENTING LEARNING JOURNEY OF* GRAPHQL API
 
 ### Best tools for working with graphql api
 - apollo-server for backend
@@ -41,3 +41,21 @@
   2. express
   3. mongodb
   4. graphql
+
+
+### How to start this api
+1. clone this repo
+```shell
+  git clone repo-url
+```
+2. install all dependencies
+```shell
+  npm install or npm i
+```
+3. compile & start the server
+```shell
+  npm run compile // for compiling ts code into js
+  AND
+  npm run dev ( to start the server after compiling the ts code )
+```
+
