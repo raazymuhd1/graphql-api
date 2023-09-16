@@ -4,7 +4,7 @@ import { Post } from "../models/post.model"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import { RegisterArgs, LoginArgs, UpdateArgs } from "../types/user.types"
-import { UpdatePostArgs, CreatePostArgs } from "../types/post.types";
+import { UpdatePostArgs, CreatePostArgs, PostReturn, CreatePostReturn } from "../types/post.types";
 import { Types } from "mongoose";
 
 export const resolvers = {
@@ -143,7 +143,7 @@ export const resolvers = {
         },
 
         // POST MUTATIONS
-        createPost: async(_: any, args: CreatePostArgs) => {
+        createPost: async(_: any, args: CreatePostArgs): Promise<CreatePostReturn | PostReturn> => {
              const { post: { author, title, description, image } } = args;
 
              if(author && title && description) {
@@ -154,7 +154,9 @@ export const resolvers = {
                   return args.post;
              }
 
-             return "post creation is failed"
+             return {
+                msg: "post creation is failed"
+             }
         },
 
         updatePost: async(_: any, args: UpdatePostArgs) => {
@@ -175,8 +177,18 @@ export const resolvers = {
 
         },
 
-        deletePost: async(_: any, args: { id: Types.ObjectId }) => {
+        deletePost: async(_: any, args: { id: Types.ObjectId }): Promise<PostReturn | void> => {
+            const { id } = args;
+            const post = await Post.findOne({ _id: id });
+            
+            if(post) {
+                await Post.deleteOne({ _id: post._id })
+                return;
+            }
 
+            return {
+                msg: "theres no user with that _id"
+            }
         },
     }
 }

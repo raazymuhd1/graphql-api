@@ -23,10 +23,15 @@ type CreatePostArgs = {
     post: Pick<IPostSchema, "author" | "title" | "description" | "image">
 }
 
+type CreatePostReturn = Pick<IPostSchema, "author" | "title" | "description" | "image">
+
 type UpdatePostArgs = {
     id: string;
     postData: Partial<Pick<IPostSchema, "author" | "title" | "description" | "image">>
 }
 
+type PostReturn = {
+    msg: string;
+}
 
-export { CreatePostArgs, UpdatePostArgs, IPostSchema, IComment }
+export { CreatePostArgs, UpdatePostArgs, IPostSchema, IComment, PostReturn, CreatePostReturn }

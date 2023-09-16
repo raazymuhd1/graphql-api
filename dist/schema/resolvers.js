@@ -123,7 +123,9 @@ exports.resolvers = {
                 console.log(args.post);
                 return args.post;
             }
-            return "post creation is failed";
+            return {
+                msg: "post creation is failed"
+            };
         },
         updatePost: async (_, args) => {
             const { id, postData: { author, title, description, image } } = args;
@@ -140,6 +142,15 @@ exports.resolvers = {
             }
         },
         deletePost: async (_, args) => {
+            const { id } = args;
+            const post = await post_model_1.Post.findOne({ _id: id });
+            if (post) {
+                await post_model_1.Post.deleteOne({ _id: post._id });
+                return;
+            }
+            return {
+                msg: "theres no user with that _id"
+            };
         },
     }
 };
