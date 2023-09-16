@@ -1,4 +1,6 @@
-#### *DOCUMENTING LEARNING JOURNEY OF* GRAPHQL API
+![graphql](https://github.com/raazymuhd1/graph-api/assets/65342312/56d68674-68ad-4a4c-9af3-6203af03ed13)
+
+## *DOCUMENTING MY LEARNING JOURNEY OF* GRAPHQL API
 
 ### Best tools for working with graphql api
 - apollo-server for backend
@@ -15,7 +17,7 @@
 - directive => it has an ability to construct the field ( wheter u want to inlucde it or not, or wheter u want to skip it or not )
     1 - @include => include a field based on a condition
     2 - @skip => skip a field based on a condition
-
+ 
   
 ### All Important types on graphql ( SCALAR TYPES )
 - ID
