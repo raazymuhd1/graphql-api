@@ -46,7 +46,7 @@
 ### How to start this api
 1. clone this repo
 ```shell
-  git clone repo-url
+  git clone https://github.com/raazymuhd1/graph-api.git
 ```
 2. install all dependencies
 ```shell
@@ -54,7 +54,7 @@
 ```
 3. compile & start the server
 ```shell
-  npm run compile // for compiling ts code into js
+  npm start // for compiling ts code into js
   AND
   npm run dev ( to start the server after compiling the ts code )
 ```
