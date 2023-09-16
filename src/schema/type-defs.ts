@@ -30,7 +30,7 @@ export const typeDefs = gql`
         commentedBy: String!
     }
 
-      type LoginReturnType {
+    type LoginReturnType {
         user: User
         token: String!
     }

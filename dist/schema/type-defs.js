@@ -32,7 +32,7 @@ exports.typeDefs = (0, apollo_server_express_1.gql) `
         commentedBy: String!
     }
 
-      type LoginReturnType {
+    type LoginReturnType {
         user: User
         token: String!
     }

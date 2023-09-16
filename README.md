@@ -1,4 +1,4 @@
-#### *DOCUMENTING LEARNING JOURNEY OF* GRAPHQL API
+#### *DOCUMENTING MY LEARNING JOURNEY OF* GRAPHQL API
 
 ### Best tools for working with graphql api
 - apollo-server for backend
