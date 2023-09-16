@@ -1,10 +1,7 @@
-<<<<<<< HEAD
-#### *DOCUMENTING MY LEARNING JOURNEY OF* GRAPHQL API
-=======
-![graphql](https://github.com/raazymuhd1/graph-api/assets/65342312/56d68674-68ad-4a4c-9af3-6203af03ed13)
+
+![graphql](https://github.com/raazymuhd1/graphql-api/assets/65342312/964f687b-904b-40d5-a627-707522a9b7ea)
 
 ## *DOCUMENTING MY LEARNING JOURNEY OF* GRAPHQL API
->>>>>>> 3b9cfe46d720688eef9d64b6d94fbf9ad98a631e
 
 ### Best tools for working with graphql api
 - apollo-server for backend
@@ -52,7 +49,7 @@
 ### How to start this api
 1. clone this repo
 ```shell
-  git clone https://github.com/raazymuhd1/graph-api.git
+  git clone [https://github.com/raazymuhd1/graph-api.git](https://github.com/raazymuhd1/graphql-api.git)
 ```
 2. install all dependencies
 ```shell
