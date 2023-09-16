@@ -27,7 +27,7 @@ const startingServer = async() => {
     app.use("/api/user", userRoutes)
     // 404 PAGE HANDLING
     app.use(notFound)
-    
+
     app.listen(PORT, () => {
          console.log(`server running on port ${PORT}`)
          console.log(`graphql server running on port ${PORT}/graphql`)

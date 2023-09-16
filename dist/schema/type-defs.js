@@ -4,7 +4,7 @@ exports.typeDefs = void 0;
 const apollo_server_express_1 = require("apollo-server-express");
 exports.typeDefs = (0, apollo_server_express_1.gql) `
     type User {
-        id: ID!
+        _id: ID!
         name: String!
         email: String!
         password: String!
@@ -15,10 +15,11 @@ exports.typeDefs = (0, apollo_server_express_1.gql) `
     }
 
     type Post {
-        id: ID!
+        _id: ID!
         author: String!
         title: String!
         description: String!
+        categories: [String!]!
         image: String!
         likes: [String]
         dislikes: [String]
@@ -26,7 +27,7 @@ exports.typeDefs = (0, apollo_server_express_1.gql) `
     }
 
     type Comment {
-        id: ID!
+        _id: ID!
         description: String!
         commentedBy: String!
     }
@@ -65,6 +66,12 @@ exports.typeDefs = (0, apollo_server_express_1.gql) `
         title: String!
         description: String!
         image: String!
+    }
+
+    fragment WithoutName on User {
+        id
+        name
+        email
     }
 
     type Query {

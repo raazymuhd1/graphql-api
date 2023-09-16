@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.resolvers = void 0;
 const user_model_1 = require("../models/user.model");
+const post_model_1 = require("../models/post.model");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 exports.resolvers = {
@@ -12,7 +13,7 @@ exports.resolvers = {
         // USER QUERIES
         user: async (_, args) => {
             const { id } = args;
-            const user = await user_model_1.User.findOne({ _id: id });
+            const user = await user_model_1.User.findOne({ _id: { $in: [id] } });
             if (user) {
                 return user;
             }
@@ -29,7 +30,12 @@ exports.resolvers = {
         // POST QUERIES
         post: (_, args) => {
         },
-        allPosts() {
+        async allPosts() {
+            const posts = await post_model_1.Post.find({});
+            if (posts) {
+                return posts;
+            }
+            return "no posts yet";
         }
     },
     Mutation: {
@@ -108,9 +114,30 @@ exports.resolvers = {
         deleteUser: async (_, args) => {
             const { id } = args;
         },
+        // POST MUTATIONS
         createPost: async (_, args) => {
+            const { post: { author, title, description, image } } = args;
+            if (author && title && description) {
+                const newPost = new post_model_1.Post({ author, title, description, image });
+                await newPost.save();
+                console.log(args.post);
+                return args.post;
+            }
+            return "post creation is failed";
         },
         updatePost: async (_, args) => {
+            const { id, postData: { author, title, description, image } } = args;
+            const post = await post_model_1.Post.findOne({ _id: id });
+            if (post) {
+                const updatedPost = await post_model_1.Post.findOneAndUpdate({ _id: id }, {
+                    author: author || post.author,
+                    title: title || post.title,
+                    description: description || post.description,
+                    image: image || post.image
+                });
+                console.log(updatedPost);
+                return updatedPost;
+            }
         },
         deletePost: async (_, args) => {
         },

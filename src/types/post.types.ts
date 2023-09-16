@@ -1,22 +1,32 @@
 import { Types } from "mongoose"
 import { Comment } from "../models/comment.model";
 
+interface IComment {
+    _id: Types.ObjectId;
+    description: string;
+    commentedBy: string;
+}
+
 interface IPostSchema {
-    id: Types.ObjectId;
+    _id: Types.ObjectId;
+    author: string;
     title: string;
     description: string;
+    categories: string[],
     image: string;
     likes?: Types.Array<string>;
     dislikes?: Types.Array<string>;
-    comments?: Types.DocumentArray<Comment>;
+    comments?: Types.DocumentArray<IComment>;
 }
 
-type CreatePostArgs = Pick<IPostSchema, "title" | "description">
+type CreatePostArgs = {
+    post: Pick<IPostSchema, "author" | "title" | "description" | "image">
+}
 
 type UpdatePostArgs = {
     id: string;
-    post: Pick<IPostSchema, "title" | "description">
+    postData: Partial<Pick<IPostSchema, "author" | "title" | "description" | "image">>
 }
 
 
-export { CreatePostArgs, UpdatePostArgs, IPostSchema }
+export { CreatePostArgs, UpdatePostArgs, IPostSchema, IComment }

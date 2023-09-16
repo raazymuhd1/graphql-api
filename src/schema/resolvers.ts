@@ -1,4 +1,6 @@
 import { User } from "../models/user.model";
+import { Post } from "../models/post.model"
+
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import { RegisterArgs, LoginArgs, UpdateArgs } from "../types/user.types"
@@ -10,7 +12,7 @@ export const resolvers = {
         // USER QUERIES
         user: async(_ : any, args: { id: string } ) => {
             const { id } = args;
-            const user = await User.findOne({ _id: id })
+            const user = await User.findOne({ _id: { $in: [id] } })
 
             if(user) {
                 return user;
@@ -33,8 +35,15 @@ export const resolvers = {
         post: (_: any, args: any) => {
 
         },
-        allPosts() {
 
+        async allPosts() {
+            const posts = await Post.find({});
+
+            if(posts) {
+                return posts;
+            }
+
+            return "no posts yet"
         }
     },
 
@@ -133,13 +142,39 @@ export const resolvers = {
              const { id } = args;
         },
 
-
+        // POST MUTATIONS
         createPost: async(_: any, args: CreatePostArgs) => {
+             const { post: { author, title, description, image } } = args;
 
+             if(author && title && description) {
+                  const newPost = new Post({ author, title, description, image })
+                  await newPost.save();
+
+                  console.log(args.post)
+                  return args.post;
+             }
+
+             return "post creation is failed"
         },
+
         updatePost: async(_: any, args: UpdatePostArgs) => {
+             const { id, postData: { author, title, description, image } } = args;
+             const post = await Post.findOne({ _id: id })
+
+             if(post) {
+                 const updatedPost = await Post.findOneAndUpdate({ _id: id }, { 
+                    author: author || post.author,
+                    title: title || post.title,
+                    description: description || post.description,
+                    image: image || post.image
+                  })
+
+                  console.log(updatedPost)
+                  return updatedPost
+             }
 
         },
+
         deletePost: async(_: any, args: { id: Types.ObjectId }) => {
 
         },

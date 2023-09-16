@@ -2,7 +2,7 @@ import { gql } from "apollo-server-express"
 
 export const typeDefs = gql`
     type User {
-        id: ID!
+        _id: ID!
         name: String!
         email: String!
         password: String!
@@ -13,10 +13,11 @@ export const typeDefs = gql`
     }
 
     type Post {
-        id: ID!
+        _id: ID!
         author: String!
         title: String!
         description: String!
+        categories: [String!]!
         image: String!
         likes: [String]
         dislikes: [String]
@@ -24,7 +25,7 @@ export const typeDefs = gql`
     }
 
     type Comment {
-        id: ID!
+        _id: ID!
         description: String!
         commentedBy: String!
     }
@@ -63,6 +64,12 @@ export const typeDefs = gql`
         title: String!
         description: String!
         image: String!
+    }
+
+    fragment WithoutName on User {
+        id
+        name
+        email
     }
 
     type Query {

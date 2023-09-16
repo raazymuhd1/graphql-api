@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
 
 interface IUserSchema {
-    id: Types.ObjectId;
+    _id: Types.ObjectId;
     name: string,
     email: string;
     password: string;
@@ -12,7 +12,7 @@ interface IUserSchema {
 }
 
 interface IUser {
-    id: Types.ObjectId;
+    _id: Types.ObjectId;
     name: string;
     email: string;
     password: string;

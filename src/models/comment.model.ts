@@ -1,6 +1,7 @@
 import { model, Schema } from "mongoose";
+import { IComment } from "../types/post.types"
 
-const CommentSchema: Schema = new Schema({
+const CommentSchema = new Schema<IComment>({
     description: { type: String, required: [true, "please add some description"] },
     commentedBy: { type: String }
 }, {
@@ -8,4 +9,4 @@ const CommentSchema: Schema = new Schema({
 })
 
 
-export const Comment = model("Comment", CommentSchema)
+export const Comment = model<IComment>("Comment", CommentSchema)
